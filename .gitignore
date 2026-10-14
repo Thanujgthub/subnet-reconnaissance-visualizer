@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+dist/
+.vercel/
+.env*
+*.tsbuildinfo
+playwright-report/
+test-results/
+reports/
+scan-results*.json
+*.local.json
+.superdesign/tmp/
+.DS_Store

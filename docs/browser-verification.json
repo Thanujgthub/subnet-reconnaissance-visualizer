@@ -1,0 +1,25 @@
+{
+  "passed": 11,
+  "checks": [
+    "Opening view, anchors, topology inspection, pause/resume",
+    "All eight workflow stages and bounded previous/next controls",
+    "Live arithmetic, examples, Calculate, clipboard, validation, and edge cases",
+    "Simulation validation, playback, reset mid-run, complete 36-result dataset and summary",
+    "Host/status filters, sorting, result inspection, topology filters, and reset after completion",
+    "All four TCP outcome sequence explanations",
+    "Architecture, local instructions, limitations, and all viva accordions",
+    "768/390/320 px layouts, reduced motion, mobile menu and Escape, full mobile demo",
+    "Graceful no-WebGL fallback",
+    "Branded 404 route",
+    "No browser console errors or unhandled page errors"
+  ],
+  "errors": [],
+  "viewports": [
+    1440,
+    768,
+    390,
+    320
+  ],
+  "source": "local production build",
+  "generatedAt": "2026-10-14T15:42:08.563Z"
+}

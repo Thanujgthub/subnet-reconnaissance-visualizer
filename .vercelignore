@@ -1,0 +1,10 @@
+node_modules
+.git
+.next
+cli
+tests
+docs
+reports
+*.local.json
+*.tsbuildinfo
+README.md

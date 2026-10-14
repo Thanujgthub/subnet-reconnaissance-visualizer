@@ -1,0 +1,52 @@
+{
+  "verifiedOn": "2026-10-14",
+  "node": "24.13.1",
+  "unitTests": {
+    "passed": 24,
+    "failed": 0,
+    "skipped": 0
+  },
+  "checks": {
+    "unitVerified": {
+      "exitCode": 0,
+      "output": "\n> subnet-reconnaissance-visualizer@1.0.0 test\n> node --test tests/*.test.mjs\n\n✔ demonstration is deterministic, ordered, and explicitly simulated (4.2043ms)\n✔ classification cases include acceptance, refusal, timeout, and route error (0.701ms)\n✔ filtering and sorting operate without mutating the source (19.1639ms)\n✔ unconfigured datasets are rejected (0.9249ms)\n✔ authorization must be explicit; dry-run creates no probes (4.0417ms)\n✔ only fully contained private and loopback targets are accepted (3.0314ms)\n✔ candidate cap, exact target scope, and conservative endpoints are enforced (0.5932ms)\n✔ ports, concurrency, and deadlines have hard bounds (2.294ms)\n✔ every invalid plan is rejected before any injected connection (1.0068ms)\n✔ worker pool never exceeds 16 active attempts and preserves task coverage (31.1707ms)\n✔ unexpected probe errors produce unknown results without crashing (0.8407ms)\n✔ TCP outcomes classify correctly and close sockets (110.9853ms)\n✔ late socket events settle only once (1.2501ms)\n✔ argument parser rejects duplicates, unknown flags, and malformed numbers (0.69ms)\n✔ real loopback acceptance and refusal work with the restricted CLI engine (29.0939ms)\n✔ /24 arithmetic and unsigned high addresses (2.8399ms)\n✔ /29 aligns to an eight-address boundary (1.5488ms)\n✔ /31 point-to-point uses both endpoints without broadcast (0.5278ms)\n✔ /32 represents a single host (0.304ms)\n✔ /0 and /1 do not overflow signed 32-bit math (0.7918ms)\n✔ all prefixes align and preserve the input range (4.1287ms)\n✔ malformed and ambiguous addresses are rejected (1.4455ms)\n✔ IPv4 integer conversion is reversible (0.4734ms)\n✔ representations stay small and candidate generation is bounded (0.8122ms)\nℹ tests 24\nℹ suites 0\nℹ pass 24\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 455.4809\n"
+    },
+    "lockWinVerified": {
+      "exitCode": 0,
+      "output": "remove @tybys/wasm-util 0.10.1\nremove @tailwindcss/oxide-win32-x64-msvc 4.2.1\nremove @tailwindcss/postcss 4.2.1\nremove @tailwindcss/oxide 4.2.1\nremove @tailwindcss/node 4.2.1\nremove @napi-rs/wasm-runtime 0.2.12\nremove @img/sharp-wasm32 0.35.4\nremove @heroicons/react 2.2.0\nremove @emnapi/runtime 1.11.3\nremove @emnapi/wasi-threads 1.2.0\nremove @emnapi/core 1.9.0\nremove @alloc/quick-lru 5.2.0\nremove tapable 2.3.0\nremove tailwindcss 4.2.1\nchange playwright-core 1.62.1 => 1.62.1\nchange playwright 1.62.1 => 1.62.1\nremove magic-string 0.30.21\nremove lightningcss 1.31.1\nremove lightningcss-win32-x64-msvc 1.31.1\nremove jiti 2.6.1\nremove graceful-fs 4.2.11\nremove enhanced-resolve 5.20.0\n\nremoved 20 packages, and changed 2 packages in 2s\n"
+    },
+    "lockLinuxVerified": {
+      "exitCode": 0,
+      "output": "add @unrs/resolver-binding-linux-x64-musl 1.11.1\nadd @unrs/resolver-binding-linux-x64-gnu 1.11.1\nadd @next/swc-linux-x64-musl 16.3.3\nadd @next/swc-linux-x64-gnu 16.3.3\nremove @unrs/resolver-binding-win32-x64-msvc 1.11.1\nremove @tailwindcss/oxide 4.2.1\nremove @tybys/wasm-util 0.10.1\nremove @tailwindcss/postcss 4.2.1\nremove @next/swc-win32-x64-msvc 16.3.3\nremove @tailwindcss/oxide-win32-x64-msvc 4.2.1\nremove @tailwindcss/node 4.2.1\nremove @napi-rs/wasm-runtime 0.2.12\nremove @img/sharp-win32-x64 0.35.4\nremove @img/sharp-wasm32 0.35.4\nremove @heroicons/react 2.2.0\nremove @emnapi/wasi-threads 1.2.0\nremove @emnapi/runtime 1.11.3\nremove @emnapi/core 1.9.0\nremove @alloc/quick-lru 5.2.0\nremove tapable 2.3.0\nremove tailwindcss 4.2.1\nchange playwright 1.62.1 => 1.62.1\nchange playwright-core 1.62.1 => 1.62.1\nremove magic-string 0.30.21\nremove lightningcss-win32-x64-msvc 1.31.1\nremove lightningcss 1.31.1\nremove jiti 2.6.1\nremove graceful-fs 4.2.11\nremove enhanced-resolve 5.20.0\n\nadded 4 packages, removed 23 packages, and changed 2 packages in 2s\n"
+    },
+    "lint": {
+      "exitCode": 0,
+      "output": "\n> subnet-reconnaissance-visualizer@1.0.0 lint\n> eslint .\n\n"
+    },
+    "typecheck": {
+      "exitCode": 0,
+      "output": "\n> subnet-reconnaissance-visualizer@1.0.0 typecheck\n> tsc --noEmit\n\n"
+    },
+    "build": {
+      "exitCode": 0,
+      "output": "\n> subnet-reconnaissance-visualizer@1.0.0 build\n> next build\n\n▲ Next.js 16.3.3 (Turbopack)\n✓ Running next.config.ts took 31ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 351ms\n  Running TypeScript ...\n  Finished TypeScript in 1502ms ...\n  Collecting page data using 5 workers ...\n  Generating static pages using 5 workers (0/4) ...\n  Generating static pages using 5 workers (1/4) \r\n  Generating static pages using 5 workers (2/4) \r\n  Generating static pages using 5 workers (3/4) \r\n✓ Generating static pages using 5 workers (4/4) in 690ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n└ ○ /icon.svg\n\n\n○  (Static)  prerendered as static content\n\n"
+    },
+    "browser": {
+      "exitCode": 0,
+      "output": "\n> subnet-reconnaissance-visualizer@1.0.0 test:e2e\n> node tests/browser.mjs\n\nPASS Opening view, anchors, topology inspection, pause/resume\nPASS All eight workflow stages and bounded previous/next controls\nPASS Live arithmetic, examples, Calculate, clipboard, validation, and edge cases\nPASS Simulation validation, playback, reset mid-run, complete 36-result dataset and summary\nPASS Host/status filters, sorting, result inspection, topology filters, and reset after completion\nPASS All four TCP outcome sequence explanations\nPASS Architecture, local instructions, limitations, and all viva accordions\nPASS 768/390/320 px layouts, reduced motion, mobile menu and Escape, full mobile demo\nPASS Graceful no-WebGL fallback\nPASS Branded 404 route\nPASS No browser console errors or unhandled page errors\nBrowser verification complete: 11 groups passed.\n"
+    }
+  },
+  "publication": {
+    "github": "Not authenticated; no remote URL verified",
+    "vercel": "CLI unavailable; registry download denied; no production URL verified"
+  },
+  "cliSmoke": {
+    "dryRunPassed": true,
+    "loopbackCommandAndJsonExportPassed": true,
+    "overwriteRefused": true
+  },
+  "resolvedFailures": [
+    "Initial lint and browser test-harness findings corrected",
+    "Parallel release checks exhausted local memory; sequential checks passed"
+  ]
+}

@@ -1,0 +1,7 @@
+import type { Metadata, Viewport } from 'next';
+import './globals.css';
+export const metadata: Metadata = { metadataBase: new URL(process.env.VERCEL_PROJECT_PRODUCTION_URL ? 'https://' + process.env.VERCEL_PROJECT_PRODUCTION_URL : process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3000'), title: 'SubnetScope — Follow the signal', description: 'An interactive Computer Networks field guide. Calculate IPv4 subnets, explore deterministic TCP port simulations, and learn a bounded local reconnaissance workflow.', applicationName: 'SubnetScope', keywords: ['subnet calculator', 'IPv4', 'CIDR', 'TCP', 'Computer Networks', 'educational network simulation'], openGraph: { title: 'SubnetScope — Every address. A clearer picture.', description: 'Explore IPv4 address space and TCP connection outcomes in an interactive networking laboratory.', type: 'website', images: [{ url: '/social.png', width: 1200, height: 630, alt: 'SubnetScope networking laboratory' }] }, twitter: { card: 'summary_large_image', title: 'SubnetScope — Follow the signal', description: 'An interactive field guide to subnets, discovery, and TCP port states.', images: ['/social.png'] }, robots: { index: true, follow: true } };
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#080f17', colorScheme: 'dark' };
+export default function RootLayout({ children }: {
+    children: React.ReactNode;
+}) { return <html lang="en"><body>{children}</body></html>; }
