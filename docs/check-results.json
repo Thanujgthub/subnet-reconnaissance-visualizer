@@ -38,8 +38,8 @@
     }
   },
   "publication": {
-    "github": "Not authenticated; no remote URL verified",
-    "vercel": "CLI unavailable; registry download denied; no production URL verified"
+    "github": "CLI remains unauthenticated; no repository URL verified",
+    "vercel": "CLI 64.0.2 now available after user login. Production deployment reached Loading teams, then failed with connect EACCES 34.160.81.0:443. No project link or production URL verified."
   },
   "cliSmoke": {
     "dryRunPassed": true,

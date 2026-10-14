@@ -44,7 +44,7 @@ The workspace started empty. All project writes are under D:/CN/subnet-reconnais
 
 Network package downloads return EACCES in this managed execution environment. The application was built and tested with cached official packages. Offline lockfile resolution and install planning pass, but a fresh registry download / clean installation could not be verified here.
 
-GitHub CLI reports that no GitHub hosts are authenticated. Vercel is not installed on PATH; the on-demand Vercel CLI could not be downloaded because registry access is denied, so Vercel authentication could not be checked. No remote repository or production URL has been verified. No unrelated remote was configured.
+After the user completed Vercel login, Vercel CLI 64.0.2 became available in D:/CN/.npm-cache. The production command was retried from the project directory and reached “Loading teams”, then exited with connect EACCES 34.160.81.0:443. The identity check encounters the same HTTPS connection denial. The CLI dry run reports that the project is not linked; no .vercel project link or deployment was created. This managed session’s outbound network restriction remains the deployment blocker. GitHub CLI still reports no authenticated hosts. No remote repository or production URL has been verified, and no unrelated remote was configured.
 
 From this project directory in a network-enabled terminal, the remaining publication commands are:
 
@@ -52,8 +52,7 @@ From this project directory in a network-enabled terminal, the remaining publica
 gh auth login
 gh repo create subnet-reconnaissance-visualizer --public --source . --remote origin --push
 gh repo view --json url
-npx vercel@latest login
-npx vercel@latest deploy --prod
+npx --cache D:/CN/.npm-cache --yes vercel@latest deploy --prod
 ~~~
 
 Choose a new Vercel project for this source directory. After deployment, open the returned URL and repeat the calculator/demo/mobile smoke checks before claiming production verification. The public lab remains a simulation after deployment; the CLI stays local.
