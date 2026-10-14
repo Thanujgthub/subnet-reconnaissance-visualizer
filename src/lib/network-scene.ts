@@ -104,13 +104,15 @@ export function createNetworkScene(element: HTMLElement, isPaused: () => boolean
         if (disposed)
             return;
         frame = requestAnimationFrame(animate);
+        if (!visible) {
+            last = now;
+            return;
+        }
+        if (now - rendered < 32) return;
         const delta = last ? Math.min(now - last, 50) : 0;
         last = now;
-        if (!visible || now - rendered < 32)
-            return;
         rendered = now;
-        if (!isPaused())
-            time += delta / 1000 * 2;
+        if (!isPaused()) time += delta / 1000;
         const projection = viewProjection(canvas.width, canvas.height, Math.sin(time * .1) * .04 + (isPaused() ? 0 : pointer));
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         gl.uniformMatrix4fv(matrix, false, projection);
@@ -123,8 +125,30 @@ export function createNetworkScene(element: HTMLElement, isPaused: () => boolean
         [1, 2, 4].forEach((target, i) => { const n = (time * .24 + i * .31) % 1; const p = points[0].map((v, axis) => v + (points[target][axis] - v) * n) as Vec3; octa(packets, p, .055, [.66, 1, .93]); });
         draw(packetBuffer, packets, gl.TRIANGLES, true);
     };
-    const fail = (event: Event) => { event.preventDefault(); onFailure(); };
+    // Cleanup is shared by unmount, responsive/motion changes, and context loss.
+    // Removing labels along with the canvas prevents them overlapping the SVG.
+    const cleanup = () => {
+        if (disposed) return;
+        disposed = true;
+        cancelAnimationFrame(frame);
+        observer.disconnect();
+        visibility.disconnect();
+        window.removeEventListener('pointermove', onPointer);
+        canvas.removeEventListener('webglcontextlost', fail);
+        if (!gl.isContextLost()) {
+            buffers.forEach(buffer => gl.deleteBuffer(buffer));
+            shaders.forEach(shader => gl.deleteShader(shader));
+            gl.deleteProgram(program);
+        }
+        labels.forEach(label => label.remove());
+        canvas.remove();
+    };
+    const fail = (event: Event) => {
+        event.preventDefault();
+        cleanup();
+        onFailure();
+    };
     canvas.addEventListener('webglcontextlost', fail);
     frame = requestAnimationFrame(animate);
-    return () => { disposed = true; cancelAnimationFrame(frame); observer.disconnect(); visibility.disconnect(); window.removeEventListener('pointermove', onPointer); canvas.removeEventListener('webglcontextlost', fail); buffers.forEach(b => gl.deleteBuffer(b)); shaders.forEach(s => gl.deleteShader(s)); gl.deleteProgram(program); labels.forEach(label => label.remove()); canvas.remove(); };
+    return cleanup;
 }

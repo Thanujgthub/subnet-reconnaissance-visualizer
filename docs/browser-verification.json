@@ -1,7 +1,9 @@
 {
-  "passed": 11,
+  "passed": 13,
   "checks": [
     "Opening view, anchors, topology inspection, pause/resume",
+    "Context loss cleans up canvas and labels; SVG host inspection remains functional",
+    "Live motion and viewport changes cleanly release and recreate 3D resources",
     "All eight workflow stages and bounded previous/next controls",
     "Live arithmetic, examples, Calculate, clipboard, validation, and edge cases",
     "Simulation validation, playback, reset mid-run, complete 36-result dataset and summary",
@@ -21,5 +23,5 @@
     320
   ],
   "source": "local production build",
-  "generatedAt": "2026-10-14T15:42:08.563Z"
+  "generatedAt": "2026-10-14T15:47:41.905Z"
 }

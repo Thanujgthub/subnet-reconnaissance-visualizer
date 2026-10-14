@@ -16,7 +16,7 @@ The application is a scrollable educational experience. The opening view must sh
 | Architecture | Actual source file/component mapping | Public/local environments and shared validation |
 | Supporting content | Local CLI instructions, glossary, FAQ, references | Expanded details; lower page sections |
 | Restricted scanner | Target/port/auth/timeout/concurrency tests; real loopback only | CLI output captured as text |
-| Reduced motion / no WebGL | SVG fallback, no automatic animation | Mobile/reduced motion view |
+| Reduced motion / no WebGL | SVG fallback, live motion/viewport transitions, context-loss cleanup, host highlighting | Mobile/reduced motion and context-loss screenshots |
 | Metadata / 404 | HTTP checks and route response | Branded missing-page view |
 | No console errors or overflow | Browser error collector and viewport measurements | 1440, 768, 390, 320 px |
 

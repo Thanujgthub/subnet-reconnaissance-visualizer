@@ -6,7 +6,7 @@ The public website teaches and simulates. A separate, restricted Node.js CLI per
 
 ## Features
 
-- A genuine, lightweight WebGL network topology with projected host labels, inspection controls, flowing packets, and pause/resume. SVG replaces WebGL on mobile, with reduced motion, or when WebGL is unavailable.
+- A genuine, lightweight WebGL network topology with projected host labels, inspection controls, flowing packets, and pause/resume. SVG replaces WebGL on mobile, with reduced motion, or when WebGL is unavailable or lost. Preference and viewport changes are handled while the page is open.
 - A progressive field guide covering networks, IPv4, CIDR, masks, address ranges, discovery evidence, TCP states, and uncertainty.
 - Exactly two primary laboratory tabs: **Subnet Explorer** and **Port Profiling Lab**.
 - Real IPv4 arithmetic for every prefix from /0 to /32, unsigned-safe integer calculations, live validation, a bit split, address visualization, and calculation steps.
@@ -188,7 +188,7 @@ npm run build
 npm run test:e2e
 ~~~
 
-The browser script starts and stops its own production server at 127.0.0.1:3100. It checks the real UI at 1440, 768, 390, and 320 px, including validation, edge cases, playback, reset, filters, sorting, inspection, navigation, reduced motion, WebGL fallback, and the 404. It saves genuine screenshots in docs/screenshots/ and a machine-readable summary in docs/browser-verification.json. An existing Chrome or Edge installation can be used when bundled Chromium is absent. Set PLAYWRIGHT_EXECUTABLE_PATH to an installed browser if needed, or BASE_URL to exercise an already running site.
+The browser script starts and stops its own production server at 127.0.0.1:3100. It checks the real UI at 1440, 768, 390, and 320 px, including validation, edge cases, playback, reset, filters, sorting, inspection, navigation, reduced motion, live motion/viewport changes, WebGL context-loss cleanup and fallback, and the 404. It saves genuine screenshots in docs/screenshots/ and a machine-readable summary in docs/browser-verification.json. An existing Chrome or Edge installation can be used when bundled Chromium is absent. Set PLAYWRIGHT_EXECUTABLE_PATH to an installed browser if needed, or BASE_URL to exercise an already running site.
 
 [QA inventory](docs/QA.md) · [Verification and publishing status](docs/VERIFICATION.md)
 

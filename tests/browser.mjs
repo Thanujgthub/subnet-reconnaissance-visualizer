@@ -57,6 +57,44 @@ try {
     assert.equal(await page.locator('.three-mount canvas').count(), 1);
     await page.locator('.scene-node-label.selected').filter({ hasText: '192.168.1.6' }).waitFor();
     check('Opening view, anchors, topology inspection, pause/resume');
+    await page.evaluate(() => {
+        const canvas = document.querySelector('.three-mount canvas');
+        const extension = canvas.getContext('webgl').getExtension('WEBGL_lose_context');
+        if (!extension) throw new Error('Context-loss extension unavailable in test browser');
+        extension.loseContext();
+    });
+    await page.locator('.three-mount canvas').waitFor({ state: 'detached' });
+    assert.equal(await page.locator('.scene-node-label').count(), 0);
+    assert.equal(await page.locator('.scene-fallback.is-hidden').count(), 0);
+    await page.locator('.host-selector').getByRole('button', { name: '.2', exact: true }).click();
+    assert.match(await page.locator('.map-node.selected').textContent(), /Web server192.168.1.2/);
+    await screenshot(page, 'webgl-context-loss.png');
+    check('Context loss cleans up canvas and labels; SVG host inspection remains functional');
+
+    const preferenceContext = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const preferencePage = await preferenceContext.newPage();
+    preferencePage.on('pageerror', error => errors.push(error.message));
+    await preferencePage.goto(url, { waitUntil: 'networkidle' });
+    await preferencePage.locator('.three-mount canvas').waitFor();
+    await preferencePage.emulateMedia({ reducedMotion: 'reduce' });
+    await preferencePage.locator('.three-mount canvas').waitFor({ state: 'detached' });
+    assert.equal(await preferencePage.locator('.scene-node-label').count(), 0);
+    assert.equal(await preferencePage.locator('.scene-fallback.is-hidden').count(), 0);
+    await preferencePage.locator('.host-selector').getByRole('button', { name: '.6', exact: true }).click();
+    assert.match(await preferencePage.locator('.map-node.selected').textContent(), /No response192.168.1.6/);
+    await screenshot(preferencePage, 'motion-preference-fallback.png');
+    await preferencePage.emulateMedia({ reducedMotion: 'no-preference' });
+    await preferencePage.locator('.three-mount canvas').waitFor();
+    await preferencePage.locator('.scene-node-label.selected').filter({ hasText: '192.168.1.6' }).waitFor();
+    await preferencePage.setViewportSize({ width: 650, height: 900 });
+    await preferencePage.locator('.three-mount canvas').waitFor({ state: 'detached' });
+    assert.equal(await preferencePage.locator('.scene-node-label').count(), 0);
+    await preferencePage.setViewportSize({ width: 1440, height: 900 });
+    await preferencePage.locator('.three-mount canvas').waitFor();
+    assert.equal(await preferencePage.locator('.scene-node-label').count(), 6);
+    await preferenceContext.close();
+    check('Live motion and viewport changes cleanly release and recreate 3D resources');
+
     for (let i = 0; i < 8; i++) {
         await page.locator('.pipeline-stages button').nth(i).click();
         assert.equal(await page.locator('.pipeline-main h3').innerText(), await page.locator('.pipeline-stages button strong').nth(i).innerText());

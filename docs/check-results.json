@@ -29,11 +29,12 @@
     },
     "build": {
       "exitCode": 0,
-      "output": "\n> subnet-reconnaissance-visualizer@1.0.0 build\n> next build\n\n▲ Next.js 16.3.3 (Turbopack)\n✓ Running next.config.ts took 31ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 351ms\n  Running TypeScript ...\n  Finished TypeScript in 1502ms ...\n  Collecting page data using 5 workers ...\n  Generating static pages using 5 workers (0/4) ...\n  Generating static pages using 5 workers (1/4) \r\n  Generating static pages using 5 workers (2/4) \r\n  Generating static pages using 5 workers (3/4) \r\n✓ Generating static pages using 5 workers (4/4) in 690ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n└ ○ /icon.svg\n\n\n○  (Static)  prerendered as static content\n\n"
+      "command": "npm run build",
+      "note": "Production rebuild passed after GPU lifecycle changes."
     },
     "browser": {
       "exitCode": 0,
-      "output": "\n> subnet-reconnaissance-visualizer@1.0.0 test:e2e\n> node tests/browser.mjs\n\nPASS Opening view, anchors, topology inspection, pause/resume\nPASS All eight workflow stages and bounded previous/next controls\nPASS Live arithmetic, examples, Calculate, clipboard, validation, and edge cases\nPASS Simulation validation, playback, reset mid-run, complete 36-result dataset and summary\nPASS Host/status filters, sorting, result inspection, topology filters, and reset after completion\nPASS All four TCP outcome sequence explanations\nPASS Architecture, local instructions, limitations, and all viva accordions\nPASS 768/390/320 px layouts, reduced motion, mobile menu and Escape, full mobile demo\nPASS Graceful no-WebGL fallback\nPASS Branded 404 route\nPASS No browser console errors or unhandled page errors\nBrowser verification complete: 11 groups passed.\n"
+      "output": "\n> subnet-reconnaissance-visualizer@1.0.0 test:e2e\n> node tests/browser.mjs\n\nPASS Opening view, anchors, topology inspection, pause/resume\nPASS Context loss cleans up canvas and labels; SVG host inspection remains functional\nPASS Live motion and viewport changes cleanly release and recreate 3D resources\nPASS All eight workflow stages and bounded previous/next controls\nPASS Live arithmetic, examples, Calculate, clipboard, validation, and edge cases\nPASS Simulation validation, playback, reset mid-run, complete 36-result dataset and summary\nPASS Host/status filters, sorting, result inspection, topology filters, and reset after completion\nPASS All four TCP outcome sequence explanations\nPASS Architecture, local instructions, limitations, and all viva accordions\nPASS 768/390/320 px layouts, reduced motion, mobile menu and Escape, full mobile demo\nPASS Graceful no-WebGL fallback\nPASS Branded 404 route\nPASS No browser console errors or unhandled page errors\nBrowser verification complete: 13 groups passed.\n"
     }
   },
   "publication": {
@@ -48,5 +49,10 @@
   "resolvedFailures": [
     "Initial lint and browser test-harness findings corrected",
     "Parallel release checks exhausted local memory; sequential checks passed"
+  ],
+  "additionalChecks": [
+    "WebGL context-loss cleanup",
+    "Live reduced-motion and responsive scene lifecycle",
+    "SVG host selection highlighting"
   ]
 }

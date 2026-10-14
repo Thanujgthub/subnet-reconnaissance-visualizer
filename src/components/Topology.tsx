@@ -31,27 +31,51 @@ export default function Topology() {
     useEffect(() => { selectedRef.current = selected; }, [selected]);
     useEffect(() => { pausedRef.current = paused; }, [paused]);
     useEffect(() => {
-        if (!mount.current || window.matchMedia('(max-width: 700px), (prefers-reduced-motion: reduce)').matches)
-            return;
+        const element = mount.current;
+        if (!element) return;
+
+        const fallbackPreference = window.matchMedia('(max-width: 700px), (prefers-reduced-motion: reduce)');
         let disposed = false;
-        let cleanup = () => { };
-        import('@/lib/network-scene').then(({ createNetworkScene }) => {
-            if (disposed || !mount.current)
-                return;
-            try {
-                cleanup = createNetworkScene(mount.current, () => pausedRef.current, () => setReady(false), () => selectedRef.current);
-                setReady(true);
-            }
-            catch {
-                setReady(false);
-            }
-        }).catch(() => { });
-        return () => { disposed = true; cleanup(); };
+        let generation = 0;
+        let cleanup = () => {};
+
+        const synchronizeScene = () => {
+            const request = ++generation;
+            cleanup();
+            cleanup = () => {};
+            setReady(false);
+            if (disposed || fallbackPreference.matches) return;
+
+            import('@/lib/network-scene').then(({ createNetworkScene }) => {
+                // A preference change or unmount may occur while the module loads.
+                if (disposed || request !== generation || fallbackPreference.matches) return;
+                try {
+                    cleanup = createNetworkScene(
+                        element,
+                        () => pausedRef.current,
+                        () => { if (!disposed && request === generation) setReady(false); },
+                        () => selectedRef.current,
+                    );
+                    setReady(true);
+                } catch {
+                    setReady(false);
+                }
+            }).catch(() => {});
+        };
+
+        synchronizeScene();
+        fallbackPreference.addEventListener('change', synchronizeScene);
+        return () => {
+            disposed = true;
+            generation++;
+            fallbackPreference.removeEventListener('change', synchronizeScene);
+            cleanup();
+        };
     }, []);
     const host = nodes[selected];
     return <div className={'topology-panel ' + (paused ? 'motion-paused' : '')}>
   <div className="panel-toolbar"><span><span className="live-dot"/> NETWORK TOPOLOGY</span><span className="mono">192.168.1.0/29</span></div>
-  <div className="scene-wrap"><div className={'scene-fallback ' + (ready ? 'is-hidden' : '')}><TopologyMap /></div><div ref={mount} className="three-mount" aria-hidden="true"/>
+  <div className="scene-wrap"><div className={'scene-fallback ' + (ready ? 'is-hidden' : '')}><TopologyMap activeHost={'192.168.1' + host.ip} /></div><div ref={mount} className="three-mount" aria-hidden="true"/>
    <div className="scene-mode"><Box size={12}/>{ready ? '3D NETWORK MODEL' : 'NETWORK MODEL'} <span>ILLUSTRATIVE</span></div>
    <button className="icon-button pause-button" onClick={() => setPaused(!paused)} aria-label={paused ? 'Resume network animation' : 'Pause network animation'}>{paused ? <Play size={14}/> : <Pause size={14}/>}</button>
   </div>

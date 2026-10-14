@@ -10,7 +10,7 @@ Verified locally on 2026-10-14 with Node.js 24.13.1 on Windows. This is a record
 | npm run lint | Passed, no warnings or errors |
 | npm run typecheck | Passed |
 | npm run build | Passed; Next.js 16.3.3 production build, static /, /_not-found, and /icon.svg |
-| npm run test:e2e | 11 check groups passed against the production build |
+| npm run test:e2e | 13 check groups passed against the production build |
 | Windows install planning | npm ci --dry-run --ignore-scripts --offline passed |
 | Linux x64 install planning | npm ci --dry-run --ignore-scripts --offline --os=linux --cpu=x64 passed |
 | CLI smoke checks | Dry-run command, actual loopback CLI command, readable table, local JSON export, and refusal to overwrite passed |
@@ -24,6 +24,8 @@ Visual review covered the opening composition, calculations, full simulation res
 No complete manual screen-reader audit or comprehensive cross-browser certification was performed. Browser verification used installed Chromium-based tooling. Real private-network discovery was not performed, and no actual lab reports were uploaded or committed.
 
 ## Issues corrected during verification
+
+- Continuation audit: GPU context loss now cancels rendering, disconnects observers/listeners, and removes the canvas and projected labels before showing SVG. Live reduced-motion and viewport changes release/recreate the scene; SVG host highlighting follows the inspection controls. Added production browser regressions for each transition.
 
 - Fixed a Next.js lint finding by using Link for the error page’s internal route; removed an unused helper.
 - Set metadataBase from Vercel’s automatic deployment URL variables, with a local fallback, removing the build warning. Added a PNG sharing image.
