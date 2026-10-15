@@ -1,58 +1,50 @@
 # Verification and publication status
 
-Verified locally on 2026-10-14 with Node.js 24.13.1 on Windows. This is a record of checks actually executed, not an experimental network performance report.
+Verified on 2026-10-15. The public site is [SubnetScope](https://subnet-reconnaissance-visualizer.vercel.app); the source is the new [public GitHub repository](https://github.com/Thanujgthub/subnet-reconnaissance-visualizer).
 
-## Final checks
+## Application checks
 
 | Check | Result |
 |---|---|
-| npm test | 24 passed, 0 failed, 0 skipped |
-| npm run lint | Passed, no warnings or errors |
-| npm run typecheck | Passed |
-| npm run build | Passed; Next.js 16.3.3 production build, static /, /_not-found, and /icon.svg |
-| npm run test:e2e | 13 check groups passed against the production build |
-| Windows install planning | npm ci --dry-run --ignore-scripts --offline passed |
-| Linux x64 install planning | npm ci --dry-run --ignore-scripts --offline --os=linux --cpu=x64 passed |
-| CLI smoke checks | Dry-run command, actual loopback CLI command, readable table, local JSON export, and refusal to overwrite passed |
-| Actual local networking | One temporary authorized 127.0.0.1:8080 listener: acceptance, cleanup, then refusal passed |
-| Private-target safety tests | Injected probes; rejection verified before connection creation |
+| Fresh registry installation | npm ci passed in a clean directory and in the project |
+| Unit and scanner-safety tests | 24 passed, 0 failed, 0 skipped |
+| Lint | Passed |
+| Strict TypeScript | Passed |
+| Local production build | Passed |
+| Vercel production build | Passed; deployment READY |
+| Production browser journeys | 13 groups passed; actual public URL recorded in browser-verification.json |
+| Responsive checks | 1440, 768, 390, and 320 px |
+| Browser console and page errors | None in the tested normal journeys |
+| Presentation downloads | Public HTTP 200; PPTX/PDF hashes match the verified local files |
+| PowerPoint | Native open passed, 12 slides and 12 populated speaker notes |
+| Deck package and layout | No integrity findings, layout findings, or font-policy warnings |
 
-Browser evidence is in [browser-verification.json](browser-verification.json), with genuine [screenshots](screenshots/). Desktop 1440 px, tablet 768 px, and mobile 390/320 px layouts were checked. The suite exercised the live calculator, prefix edge cases, invalid input, example buttons, copying, keyboard tabs, all pipeline stages, demo playback and speeds, reset during/after playback, tab-switch cleanup, filtering, sorting, inspection, topology controls, TCP sequences, accordions, reduced motion, no-WebGL fallback, and the branded 404. No normal-journey console errors or unhandled page errors were observed. The intentional missing-page request’s expected HTTP 404 is excluded from the console error assertion.
+The supported CI and hosting runtime is pinned to Node 24. The renewed Windows checks ran on the available Node 25.6.0 installation; npm warns about that local engine difference. Earlier Node 24.13.1 checks also passed. The GitHub Actions workflow uses Node 24 and is checked separately after pushing.
 
-Visual review covered the opening composition, calculations, full simulation results, narrow mobile table, fundamentals, pipeline, TCP states, architecture, local-tool instructions, limitations, glossary, and viva section. No page-level horizontal overflow was observed at the tested sizes. The result table intentionally has its own horizontal scroll region; classification remains visible before the supplementary columns on small screens.
+The browser suite covers navigation and anchors, topology selection and motion controls, WebGL context loss and resource cleanup, changing motion/viewport preferences, all eight pipeline stages, calculator input/clipboard/edge cases, deterministic playback, reset during/after playback, filters, sorting, result inspection, TCP sequences, architecture and viva content, direct presentation downloads, mobile menu/Escape, reduced motion, no-WebGL fallback, and the branded 404. Genuine screenshots are in screenshots/. The results table has an intentional independent horizontal scroll area on small screens.
 
-No complete manual screen-reader audit or comprehensive cross-browser certification was performed. Browser verification used installed Chromium-based tooling. Real private-network discovery was not performed, and no actual lab reports were uploaded or committed.
+## Real local networking
 
-## Issues corrected during verification
+Unit/integration checks create only an owned temporary 127.0.0.1:8080 listener, verify acceptance, close it, and verify refusal. The actual CLI dry-run, authorization, readable table, local JSON export, and refusal to overwrite were also verified. Private-network safety tests use injected probes; no other private network was scanned and no actual report was published.
 
-- Continuation audit: GPU context loss now cancels rendering, disconnects observers/listeners, and removes the canvas and projected labels before showing SVG. Live reduced-motion and viewport changes release/recreate the scene; SVG host highlighting follows the inspection controls. Added production browser regressions for each transition.
+## Presentation
 
-- Fixed a Next.js lint finding by using Link for the error page’s internal route; removed an unused helper.
-- Set metadataBase from Vercel’s automatic deployment URL variables, with a local fallback, removing the build warning. Added a PNG sharing image.
-- Made the clipboard browser assertion wait for the asynchronous success state instead of checking immediately.
-- Narrowed a browser test locator that also matched Next.js’s route announcer.
-- Distinguished the intentional 404 response from unexpected normal-journey console errors in the browser test harness.
-- Moved classification ahead of service hints in the mobile table and added a scroll hint.
-- A later parallel lint/type/build run exhausted local memory. After closing the review browser, all three checks passed sequentially with the normal npm commands.
-- Corrected stale transitive dependency files when assembling the cached verification toolchain; generated a portable lockfile and checked Windows/Linux install planning.
+The public directory contains SubnetScope-Project.pptx, SubnetScope-Project.pdf, and SubnetScope-Speaker-Notes.txt. The PPTX contains editable text and diagrams. It was normalized/exported by Microsoft PowerPoint, reopened normally, and all 12 native slide renders were inspected. The PDF is a native PowerPoint export. This replaces the account-restricted Page fallback with ordinary public downloads.
 
-All final application checks pass. GitHub Actions configuration is included but has not run remotely.
+The deck integrity checker passed. The layout checker passed for 12 slides, 16:9 dimensions, heading fit, bullet geometry, Arial and Consolas. Its Python 3.9 invocation needed an in-memory itertools.pairwise compatibility shim; no skill files were changed. No unsupported claim of comprehensive PowerPoint compatibility testing is made.
 
-## Environment and publication
+## Publication
 
-The workspace started empty. All project writes are under D:/CN/subnet-reconnaissance-visualizer; the project has its own new Git repository. Existing projects were used only as read-only sources of installed dependencies for offline checks.
+GitHub CLI authentication and Vercel identity were verified. A new public repository was created under Thanujgthub and main was pushed without changing unrelated repositories. A new Vercel project was created and connected to that repository. The production alias is publicly readable without an account; checks used ordinary unauthenticated HTTP requests and a fresh browser context.
 
-Network package downloads return EACCES in this managed execution environment. The application was built and tested with cached official packages. Offline lockfile resolution and install planning pass, but a fresh registry download / clean installation could not be verified here.
+The public site is hosted on Vercel and does not depend on this PC or a temporary tunnel. No four-hour uptime guarantee is claimed. The educational lab sends no real network probes. The CLI and local reports are excluded from Vercel uploads.
 
-After the user completed Vercel login, Vercel CLI 64.0.2 became available in D:/CN/.npm-cache. The production command was retried from the project directory and reached “Loading teams”, then exited with connect EACCES 34.160.81.0:443. The identity check encounters the same HTTPS connection denial. The CLI dry run reports that the project is not linked; no .vercel project link or deployment was created. This managed session’s outbound network restriction remains the deployment blocker. GitHub CLI still reports no authenticated hosts. No remote repository or production URL has been verified, and no unrelated remote was configured.
+## Corrected issues
 
-From this project directory in a network-enabled terminal, the remaining publication commands are:
+The original managed session could not launch processes or download packages. After execution/network access became available, both authenticated CLIs worked. The first remote build exposed an invalid offline-generated lockfile. The lockfile was regenerated from the official registry in a clean directory, Next.js ESLint configuration versions were aligned, and fresh installation plus cloud builds passed. This resolved the initial GitHub Actions installation failure as well; final CI status is verified against the pushed commit.
 
-~~~sh
-gh auth login
-gh repo create subnet-reconnaissance-visualizer --public --source . --remote origin --push
-gh repo view --json url
-npx --cache D:/CN/.npm-cache --yes vercel@latest deploy --prod
-~~~
+Earlier UI verification corrected clipboard timing, a route-announcer selector, an expected 404 assertion, mobile classification visibility, and WebGL context cleanup. One prior parallel check exhausted memory; subsequent checks passed.
 
-Choose a new Vercel project for this source directory. After deployment, open the returned URL and repeat the calculator/demo/mobile smoke checks before claiming production verification. The public lab remains a simulation after deployment; the CLI stays local.
+## Limits of verification
+
+No full manual screen-reader audit or comprehensive cross-browser certification was performed. Browser checks used Chromium. TCP classification does not identify applications or determine service security, and a timeout does not prove filtering or an offline host. All website port observations and timings are explicitly simulated.

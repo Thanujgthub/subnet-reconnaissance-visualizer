@@ -1,0 +1,40 @@
+{
+  "verifiedAt": "2026-10-15T05:32:57.326Z",
+  "repository": "https://github.com/Thanujgthub/subnet-reconnaissance-visualizer",
+  "production": "https://subnet-reconnaissance-visualizer.vercel.app",
+  "vercelDeployment": "dpl_65fd5Zu3vn77LmLeanGgu6Wc2VZE",
+  "authenticationRequiredForProduction": false,
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "url": "https://subnet-reconnaissance-visualizer.vercel.app/",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 139796
+    },
+    {
+      "path": "/SubnetScope-Project.pptx",
+      "status": 200,
+      "url": "https://subnet-reconnaissance-visualizer.vercel.app/SubnetScope-Project.pptx",
+      "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "bytes": 54643,
+      "matchesLocal": true
+    },
+    {
+      "path": "/SubnetScope-Project.pdf",
+      "status": 200,
+      "url": "https://subnet-reconnaissance-visualizer.vercel.app/SubnetScope-Project.pdf",
+      "contentType": "application/pdf",
+      "bytes": 200015,
+      "matchesLocal": true
+    },
+    {
+      "path": "/SubnetScope-Speaker-Notes.txt",
+      "status": 200,
+      "url": "https://subnet-reconnaissance-visualizer.vercel.app/SubnetScope-Speaker-Notes.txt",
+      "contentType": "text/plain; charset=utf-8",
+      "bytes": 7407,
+      "matchesLocal": true
+    }
+  ]
+}

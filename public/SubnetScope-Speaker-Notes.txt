@@ -1,0 +1,69 @@
+1. SubnetScope
+
+Opening: My project is SubnetScope, an educational Computer Networks application. It makes subnet calculations and TCP port outcomes visible step by step. There are two parts: an interactive website with a clearly marked simulation, and a separate Node.js tool for real, authorized local TCP testing. I will first explain the networking concepts, then the workflow, and finally demonstrate both lab tabs. Suggested total presentation time: 7 to 9 minutes.
+
+----------------------
+
+2. Why does this project matter?
+
+Explain a small college lab or office. An administrator needs to know the allowed address range, which addresses respond to a selected check, and whether an expected service accepts a TCP connection. Repeating this manually is tedious and inconsistent. Automation applies the same validation, limits, timeout, and classification rules to every candidate. This project teaches that workflow; it does not claim that every silent device is offline or that an open service is secure.
+
+----------------------
+
+3. Start with four simple ideas
+
+A network connects devices so they can exchange information. A host is a device participating in that network. Its IP address identifies a network interface in the relevant network context. A TCP port is a numbered endpoint used for connections to a service. A useful analogy is a building address and a room number, although networking has more details. Here 192.168.1.2 is a sample host, and port 443 conventionally suggests HTTPS. A port number alone does not prove the application.
+
+----------------------
+
+4. What does /24 mean?
+
+IPv4 has four octets, with eight bits in each octet. In 192.168.1.0/24, the first 24 bits identify the network and the remaining 8 bits identify positions within it. There are 2 to the power of 8, or 256 total addresses. In this conventional subnet, the network and broadcast addresses are reserved, leaving 254 usable hosts. This subtraction is not applied blindly: an RFC 3021 point-to-point /31 has two endpoints, and a /32 represents one address. The calculator implements these cases.
+
+----------------------
+
+5. Calculate a small subnet
+
+Walk from left to right. Prefix 29 leaves 3 host bits, so 2 to the power of 3 gives 8 addresses. The subnet mask is 255.255.255.248. The network address is 192.168.1.0 and the broadcast address is 192.168.1.7. The six conventional usable hosts run from 192.168.1.1 to 192.168.1.6. The Subnet Explorer computes these values dynamically. It also accepts a host address with a prefix and shows the calculated network. The scanner is stricter: it requires the explicit canonical network CIDR.
+
+----------------------
+
+6. Follow the complete workflow
+
+Read this flow across the top row and then across the bottom. Authorized input supplies the exact intended target. Validation rejects malformed or disallowed input. Subnet calculation gives the boundaries; candidate generation lists the eligible addresses. Discovery records the response to a chosen check. TCP profiling attempts the selected ports, classification interprets the outcome, and the report summarizes it. In the website, discovery and TCP outcomes are deterministic examples. The real CLI probes every permitted candidate directly, so a separate discovery gate cannot hide a silent host. Its report is a console table and optional local JSON.
+
+----------------------
+
+7. Candidate, responsive host, or service?
+
+A candidate is simply an address eligible for testing. It is not proof that a device exists there. A responsive host has answered a particular discovery check. A confirmed TCP endpoint has accepted a connection to a particular port at that time. The demo contains six candidates and four illustrative discovery responders. Those numbers are simulated examples, not measured inventory. Real hosts can ignore probes because of policy, firewall rules, packet loss, or routing problems. Therefore no response is inconclusive.
+
+----------------------
+
+8. How do we classify a TCP port?
+
+A TCP connection normally starts with a handshake. If the operating system reports that the connection was accepted, the port is open for that attempt. An explicit connection refusal is classified as closed. If the timeout expires with no conclusive result, the label is filtered or no response; this is not proof that a firewall caused it. Other failures are error or unknown. Common port numbers suggest conventions: SSH often uses 22, HTTP 80 and HTTPS 443. DNS can use TCP 53 as well as UDP, but this utility checks TCP only. It does not fingerprint applications or evaluate security.
+
+----------------------
+
+9. Architecture matches the implementation
+
+The website is a Next.js application using React, strict TypeScript, CSS, SVG, and a native WebGL topology. Subnet calculations run in the browser. The public port lab reads deterministic sample events and presents classifications and summaries. It does not send scans. The local Node.js CLI reuses IPv4 calculations and applies stricter scope validation before opening bounded TCP sockets. It classifies actual socket outcomes and prints a table, with optional local JSON. No database, external result collection, or public arbitrary-target scan API is used.
+
+----------------------
+
+10. Demonstrate the two lab tabs
+
+First open Subnet Explorer, calculate 192.168.1.0/24, and explain the 256 total versus 254 usable addresses. Change to /29 and show the six usable hosts. Briefly select /31 or /32 to explain the edge cases. Then open Port Profiling Lab and press Start Demo. Observe candidate checks, discovery responses, and TCP event classifications. Inspect one result, filter by a state, sort a column, and press Reset. The complete deterministic sample has 36 port results: 6 open, 17 closed, 12 no response, and 1 unknown. These are teaching data, not network measurements.
+
+----------------------
+
+11. Real testing stays in an authorized lab
+
+The local utility accepts only explicit RFC 1918 private IPv4 networks or loopback, with an authorization flag required to send probes. It rejects public, unspecified, multicast, broadcast, and other disallowed scope. The exact requested canonical CIDR is preserved; it is never silently expanded. A single run has at most fourteen candidate usable addresses, at most sixteen concurrent connection attempts, and bounded 100 to 2000 millisecond timeouts. Allowed ports are 22, 53, 80, 443, 3306, 5432, and 8080. A dry run shows the plan without connections. The example below uses only your own loopback machine. Get permission before testing any other lab.
+
+----------------------
+
+12. What did we build and verify?
+
+Close by stating what works: a responsive educational website with an interactive 3D topology, a correct IPv4/CIDR calculator, a transparent deterministic port lab, and a restricted actual TCP CLI. Recorded local verification passed twenty-four unit and safety tests, thirteen browser verification groups, linting, strict type checking, and a production build. These are software checks, not performance or security benchmarks. Limitations remain: timeouts and failed discovery are inconclusive, services can move from conventional ports, and an open port is not a vulnerability finding. References for theory: RFC 1918 private IPv4, RFC 3021 /31 links, and RFC 9293 TCP. Suggested final sentence: We made the reconnaissance workflow visible, testable, and safe to demonstrate.

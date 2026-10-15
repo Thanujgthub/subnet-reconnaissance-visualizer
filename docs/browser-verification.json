@@ -9,7 +9,7 @@
     "Simulation validation, playback, reset mid-run, complete 36-result dataset and summary",
     "Host/status filters, sorting, result inspection, topology filters, and reset after completion",
     "All four TCP outcome sequence explanations",
-    "Architecture, local instructions, limitations, and all viva accordions",
+    "Architecture, local instructions, viva accordions, and direct presentation downloads",
     "768/390/320 px layouts, reduced motion, mobile menu and Escape, full mobile demo",
     "Graceful no-WebGL fallback",
     "Branded 404 route",
@@ -22,6 +22,7 @@
     390,
     320
   ],
-  "source": "local production build",
-  "generatedAt": "2026-10-14T15:47:41.905Z"
+  "source": "deployed production site",
+  "baseUrl": "https://subnet-reconnaissance-visualizer.vercel.app",
+  "generatedAt": "2026-10-15T05:32:37.087Z"
 }

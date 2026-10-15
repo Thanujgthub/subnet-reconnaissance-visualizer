@@ -186,7 +186,19 @@ try {
         await item.click();
         await item.click();
     }
-    check('Architecture, local instructions, limitations, and all viva accordions');
+    const presentationDownload = page.getByRole('link', { name: 'Download PowerPoint' });
+    const [download] = await Promise.all([
+        page.waitForEvent('download'),
+        presentationDownload.click(),
+    ]);
+    assert.equal(download.suggestedFilename(), 'SubnetScope-Project.pptx');
+    assert.equal(await download.failure(), null);
+    for (const path of ['/SubnetScope-Project.pptx', '/SubnetScope-Project.pdf', '/SubnetScope-Speaker-Notes.txt']) {
+        const response = await context.request.get(url + path);
+        assert.equal(response.status(), 200, 'Presentation asset unavailable: ' + path);
+        assert.ok((await response.body()).length > 1000);
+    }
+    check('Architecture, local instructions, viva accordions, and direct presentation downloads');
     for (const width of [768, 390, 320]) {
         const mobile = await browser.newContext({ viewport: { width, height: 844 }, isMobile: width < 700, hasTouch: width < 700, reducedMotion: 'reduce' });
         const p = await mobile.newPage();
@@ -231,7 +243,7 @@ try {
     check('Branded 404 route');
     assert.deepEqual(errors, []);
     check('No browser console errors or unhandled page errors');
-    await writeFile(new URL('../docs/browser-verification.json', import.meta.url), JSON.stringify({ passed: checks.length, checks, errors, viewports: [1440, 768, 390, 320], source: 'local production build', generatedAt: new Date().toISOString() }, null, 2) + '\n');
+    await writeFile(new URL('../docs/browser-verification.json', import.meta.url), JSON.stringify({ passed: checks.length, checks, errors, viewports: [1440, 768, 390, 320], source: process.env.BASE_URL ? 'deployed production site' : 'local production build', baseUrl: url, generatedAt: new Date().toISOString() }, null, 2) + '\n');
     console.log('Browser verification complete: ' + checks.length + ' groups passed.');
 }
 finally {

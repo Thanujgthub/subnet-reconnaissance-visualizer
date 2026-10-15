@@ -4,6 +4,10 @@
 
 The public website teaches and simulates. A separate, restricted Node.js CLI performs actual TCP connection tests in an authorized private lab. The website has no scanning endpoint and never probes a visitor’s network.
 
+[Live website](https://subnet-reconnaissance-visualizer.vercel.app) ? [GitHub repository](https://github.com/Thanujgthub/subnet-reconnaissance-visualizer)
+
+[Download the 12-slide PowerPoint](https://subnet-reconnaissance-visualizer.vercel.app/SubnetScope-Project.pptx) ? [PDF](https://subnet-reconnaissance-visualizer.vercel.app/SubnetScope-Project.pdf) ? [Speaker notes](public/SubnetScope-Speaker-Notes.txt)
+
 ## Features
 
 - A genuine, lightweight WebGL network topology with projected host labels, inspection controls, flowing packets, and pause/resume. SVG replaces WebGL on mobile, with reduced motion, or when WebGL is unavailable or lost. Preference and viewport changes are handled while the page is open.
@@ -42,7 +46,7 @@ Native WebGL and browser-native motion keep the experience small and independent
 
 ## Setup and local development
 
-Use **Node.js 22.18+** (Node 24 is used for validation) and npm. Native TypeScript stripping lets the CLI and unit tests import the shared calculation module directly.
+Use **Node.js 24 LTS** and npm. The supported deployment and CI runtime is pinned to Node 24. Native TypeScript stripping lets the CLI and unit tests import the shared calculation module directly.
 
 ~~~sh
 npm ci
@@ -192,26 +196,25 @@ The browser script starts and stops its own production server at 127.0.0.1:3100.
 
 [QA inventory](docs/QA.md) · [Verification and publishing status](docs/VERIFICATION.md)
 
+## Presentation
+
+The public downloads contain exactly 12 slides with editable text and diagrams, and speaker notes explaining how to present each topic. The deck was opened and exported in Microsoft PowerPoint, and every rendered slide was inspected. A PDF and plain-text speaker notes are included for easy viewing. No Codex, ChatGPT, Google, or Vercel account is needed to download them.
+
 ## GitHub and Vercel
 
-This checkout is an isolated Git repository. Do not push it to an unrelated remote. After authenticating in the project directory:
+Source: https://github.com/Thanujgthub/subnet-reconnaissance-visualizer
+
+Production: https://subnet-reconnaissance-visualizer.vercel.app
+
+The new Vercel project is connected to this repository. To deploy your own checkout, import your repository into a new Vercel project with the Next.js preset and the project root unchanged. The build command is npm run build and the runtime is Node 24. No database, custom environment variables, or scanning server is required.
+
+From a correctly linked checkout, an authenticated account can also deploy using:
 
 ~~~sh
-gh auth login
-gh repo create subnet-reconnaissance-visualizer --public --source . --remote origin --push
-gh repo view --json url
-~~~
-
-Deploy the current project using Vercel’s Next.js support:
-
-~~~sh
-npx vercel@latest login
 npx vercel@latest deploy --prod
 ~~~
 
-Choose a **new** project named subnet-reconnaissance-visualizer if prompted. The build command is npm run build. No database, custom environment variable, or scanner server is required. Alternatively import the new GitHub repository in Vercel with the Next.js preset and project root unchanged.
-
-Verify the returned production URL in the browser: calculate /31 and /32, finish a simulation, filter and inspect results, reset, and check the mobile menu. Do not report a URL until the deployment succeeds. This environment’s actual publication status is recorded in docs/VERIFICATION.md.
+Verify the resulting URL and run BASE_URL=<url> npm run test:e2e (set the environment variable with your shell's syntax). Production verification and any limitations are recorded in docs/VERIFICATION.md.
 
 ## Limitations
 
@@ -222,7 +225,7 @@ Verify the returned production URL in the browser: calculate /31 and /32, finish
 - The CLI’s conservative .0/.255 exclusion intentionally rejects some technically usable /31 or /32 addresses.
 - Local JSON export has no web report importer. It remains separate from the demonstration.
 - 3D is replaced with SVG for small screens and reduced motion. No complete manual screen-reader audit has been performed.
-- Fresh package download and remote deployment require network access; this session used locally cached packages for build verification.
+- The local scanner requires Node.js and explicit authorization. It does not run in the hosted site.
 
 ## References
 
